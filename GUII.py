@@ -3,6 +3,8 @@ from tkinter import *
 import tkinter as tk
 from tkinter import LabelFrame, Label, Button, StringVar, messagebox
 import main
+import save
+from datetime import datetime
 
 
 size = "500x500"
@@ -13,6 +15,10 @@ root = Tk()
 main_frame = tk.Frame(root)
 main_frame.pack(padx=20, pady=20)
 
+currentDate = datetime.now()
+currentDate = currentDate.strftime("%Y-%m-%d")
+currentTime = datetime.now()
+currentTime = currentTime.strftime("%H:%M:%S")
 def isnum(value):
         
         try:
@@ -24,12 +30,13 @@ def isnum(value):
             return False
 
 def ShowTemp(value, scale):
-    if value != "e":
-        string = "Your temperature is " + str(value) + " degrees " + str(scale)
+    getOriginal = GUII.linkText.get(1.0,"end-1c")
+
+    if value != "e" or value == "0":
+        string = "Your temperature is " + str(value) + " degrees " + str(scale) + "\nData will be saved "
         messagebox.showinfo("Temperature",  string)
-    elif value == "0":
-        string = "Your temperature is " + str(value) + " degrees " + str(scale)
-        messagebox.showinfo("Temperature",  string)
+        save.save_data(getOriginal,value, scale, currentDate,currentTime)
+   
     else:
         string = "This is not a valid temperature. \nThe text box will now be cleared"
         messagebox.showinfo("Temperature",  string)
