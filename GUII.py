@@ -16,7 +16,7 @@ main_frame = tk.Frame(root)
 main_frame.pack(padx=20, pady=20)
 
 currentDate = datetime.now()
-currentDate = currentDate.strftime("%Y-%m-%d")
+currentDate = currentDate.strftime("%Y-%B-%d")
 currentTime = datetime.now()
 currentTime = currentTime.strftime("%H:%M:%S")
 def isnum(value):
