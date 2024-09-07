@@ -5,7 +5,7 @@ from tkinter import LabelFrame, Label, Button, StringVar, messagebox
 import main
 import save
 from datetime import datetime
-
+import subprocess
 
 size = "500x500"
 title = "Temperature Checker"
@@ -40,6 +40,11 @@ def ShowTemp(value, scale):
     else:
         string = "This is not a valid temperature. \nThe text box will now be cleared"
         messagebox.showinfo("Temperature",  string)
+    GUII.checkData()
+
+def showData():
+        
+    subprocess.Popen(["python", "datascreen.py"])
 
 
 class GUII():
@@ -50,7 +55,10 @@ class GUII():
     def initUI(self,root):
         root.geometry(size)
         root.title(title)
-
+        GUII.checkData()
+        
+    
+    
     def ToCelsius():
 
 
@@ -58,7 +66,7 @@ class GUII():
         if isnum(text):
             celsius = (float(text) - 32) * 5/9
             text = round(celsius,3)
-            ShowTemp(text, "°C")
+            ShowTemp(text, "Celsius")
 
         else:
             ShowTemp("e", "error")
@@ -72,7 +80,7 @@ class GUII():
         if isnum(text):
             fahrenheit = (float(text) * 9/5) + 32
             text = round(fahrenheit,3)
-            ShowTemp(str(fahrenheit), "°F")
+            ShowTemp(str(fahrenheit), "Fahrenheit")
         else:
             ShowTemp("e", "error")
             # clear the linktext box
@@ -101,12 +109,17 @@ class GUII():
             # clear the linktext box
             GUII.linkText.delete(1.0, tk.END)
             GUII.linkText.insert(tk.END, "")
+        
+   
+
+
 
     text_var = StringVar()
     text_var.set("Temperature Number Converter")
 
     innerFrame = tk.Frame(main_frame)
     innerFrame.pack()
+    
 
 
     label = Label(innerFrame, 
@@ -204,3 +217,30 @@ class GUII():
                     overrelief="raised",)
 
     btnRankine.pack(padx=20, pady=20)  
+
+    global btnDataScreen
+    btnDataScreen = Button(innerFrame, text="Data Screen",   
+                    command=showData,  
+                    anchor="center",
+                    bd=3,
+                    bg="lightgray",
+                    cursor="hand2",
+                    disabledforeground="gray",
+                    fg="black",
+                    font=("Arial", 12),
+                    height=2,
+                    highlightbackground="black",
+                    highlightcolor="green",
+                    highlightthickness=2,
+                    justify="center",
+                    overrelief="raised",)
+
+    btnDataScreen.pack()  
+
+    # if json file exists then show btnDataScreen button
+    # rewrite the following so it can be run both checking this btndatascreen button and in the save button
+    def checkData():
+        if save.check_json():
+            btnDataScreen.config(state=NORMAL)
+        else: 
+            btnDataScreen.config(state=DISABLED)

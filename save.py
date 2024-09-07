@@ -59,3 +59,15 @@ def check_counter(counter):
         newCounter = max(existing_ids) + 1
         return newCounter
     return False
+def check_json():
+    filename = "temperature_data.json"
+    if os.path.exists(filename):
+        with open(filename, "r") as file:
+            try:
+                existing_data = json.load(file)
+            except json.JSONDecodeError:
+                existing_data = []
+            
+    else:
+        existing_data = []
+    return existing_data
