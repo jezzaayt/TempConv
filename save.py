@@ -6,7 +6,6 @@ def save_data(original,temp, units, date, time):
    
     temp = round(float(temp),3)
     original = round(float(original),3)
-    print(c)
     data = {
         "Original Value": original,
         "Temperature": temp,
@@ -32,7 +31,7 @@ def save_data(original,temp, units, date, time):
 
     with open(filename, "w") as file:
         json.dump(existing_data, file, indent=4)
-        print("Temperature data saved successfully.")c
+        print("Temperature data saved successfully.")
   
 
 def check_json():
