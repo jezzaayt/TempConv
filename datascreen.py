@@ -12,47 +12,47 @@ import matplotlib.patches as patches
 
 
 # Window settings
-size = "500x500"
+size = "850x550"
 title = "Show Data from file"
 
 
 def plot():
     unitColors = {"Celsius":"Blue",
 "Fahrenheit":"Orange",
-"Kelvin":"Yellow",
+"Kelvin":"Red",
 "Rankine":"Cyan",}
     
 
 
     df = pl.read_json('temperature_data.json')
     
-    fig = Figure(figsize=(6, 4), dpi=100)
-    ax = fig.add_subplot(111)
+    fig = Figure(figsize=(10  , 4), dpi=100)
+    ax = fig.add_subplot()
     
     df = df.with_columns([
-    pl.col('Units').map_dict(unitColors).alias('Color')
+    pl.col('Units').map_dict(unitColors).alias('Color'),
 ])
 
-    
+    print(type(df["Temperature"][0]))
     y = df["Temperature"]
     x = df["Original Value"]
 
-    cmap = plt.get_cmap('viridis')
+
     
     # Plot data
-    ax.scatter(x, y, c=df["Color"], cmap=cmap)
-    ax.set_title('Temperature Loaded')
+    ax.scatter(x, y, c=df["Color"])
+    ax.set_title('Temperatures')
     ax.set_xlabel('Original Value')
     ax.set_ylabel('Converted Temperature')
     
-    handles = [plt.Line2D([0], [0], marker='o', color='w', markerfacecolor=color, markersize=10, linestyle='') 
+    handles = [plt.Line2D([0], [0], marker='o', color='w', markerfacecolor=color, markersize=10, linestyle='dashdot') 
            for color in unitColors.values()]
     labels = unitColors.keys()
     ax.legend(handles, labels, title="Units")
     # Create a FigureCanvasTkAgg object and embed it in the Tkinter window
     canvas = FigureCanvasTkAgg(fig)
     canvas.draw()
-    canvas.get_tk_widget().pack( expand=1)
+    canvas.get_tk_widget().pack( expand=3)
 
     canvas.get_tk_widget().pack(expand=True)
 
@@ -62,12 +62,12 @@ def DataScreen():
     dataScreen = Tk()  # Use Tk() to create a new main window
 
     dataScreen.title(title)
-    dataScreen.geometry("500x500")
+    dataScreen.geometry(size)
     
 
 
     # Add some widgets to the second window
-    label = Label(dataScreen, text="This is the second window")
+    label = Label(dataScreen, text="Original Value is a numeric value which was originally entered\nSo the value could be any numeric value to change it to another temperature output")
     label.pack(pady=20)
     
     plot()

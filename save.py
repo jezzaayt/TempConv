@@ -8,6 +8,8 @@ def save_data(original,temp, units, date, time):
 
     c = check_counter(counter)
     print(check_counter(counter))
+    temp = round(float(temp),3)
+    original = round(float(original),3)
     data = {
         "ID":c,
         "Original Value": original,

@@ -22,11 +22,10 @@ currentTime = currentTime.strftime("%H:%M:%S")
 def isnum(value):
         
         try:
-         
-            float(value)
-
+          
             return True
         except ValueError:
+            print(ValueError)
             return False
 
 def ShowTemp(value, scale):
@@ -66,6 +65,7 @@ class GUII():
         if isnum(text):
             celsius = (float(text) - 32) * 5/9
             text = round(celsius,3)
+            print(type(text))
             ShowTemp(text, "Celsius")
 
         else:
@@ -100,6 +100,7 @@ class GUII():
             GUII.linkText.insert(tk.END, "")
     def toRankine():
         text = GUII.linkText.get(1.0,"end-1c")
+        text = float(text)
         if isnum(text):
             rankine = (float(text) + 491.67) * 9/5
             text = round(rankine,3)
