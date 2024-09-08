@@ -6,8 +6,10 @@ import main
 import save
 from datetime import datetime
 import subprocess
+import json
+import pandas as pd
 
-size = "500x500"
+size = "500x650"
 title = "Temperature Checker"
 
 root = Tk()
@@ -110,7 +112,22 @@ class GUII():
             # clear the linktext box
             GUII.linkText.delete(1.0, tk.END)
             GUII.linkText.insert(tk.END, "")
+    def saveToCSV():
+        print("Save to csv file")
+        # read the json file and export it as a csv
+        json_file_path = 'temperature_data.json'  # Path to your JSON file
+        with open(json_file_path, 'r') as file:
+            data = pd.read_json(file)
+        print(data)
+       
+        # Step 3: Save DataFrame to CSV
+        csv_file_path = 'temperature_data.csv'  # Path to save your CSV file
+        data.to_csv(csv_file_path)
+
+        print(f"Data saved to {csv_file_path}")
         
+
+
    
 
 
@@ -237,11 +254,29 @@ class GUII():
                     overrelief="raised",)
 
     btnDataScreen.pack()  
-
+    global btnSavetoCSV
+    btnSavetoCSV = Button(innerFrame, text="Save to CSV",   
+                command=saveToCSV,  
+                    anchor="center",
+                    bd=2,
+                    bg="lightgray",
+                    cursor="hand2",
+                    disabledforeground="gray",
+                    fg="black",
+                    font=("Arial", 12),
+                    height=2,
+                    highlightbackground="black",
+                    highlightcolor="green",
+                    highlightthickness=2,
+                    justify="center",
+                    overrelief="raised",)
+    btnSavetoCSV.pack(padx=10, pady=20)  
     # if json file exists then show btnDataScreen button
     # rewrite the following so it can be run both checking this btndatascreen button and in the save button
     def checkData():
         if save.check_json():
-            btnDataScreen.config(state=NORMAL)
+            btnDataScreen.config(state=NORMAL) 
+            btnSavetoCSV.config(state=NORMAL) 
         else: 
             btnDataScreen.config(state=DISABLED)
+            btnSavetoCSV.config(state=DISABLED) 

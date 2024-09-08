@@ -44,11 +44,13 @@ def plot():
     ax.set_title('Temperatures')
     ax.set_xlabel('Original Value')
     ax.set_ylabel('Converted Temperature')
+    for i, (x_val, y_val) in enumerate(zip(x, y)):
+        ax.text(x_val, y_val, f'{y_val:.2f}', fontsize=7, ha='left', va='center')
     
     handles = [plt.Line2D([0], [0], marker='o', color='w', markerfacecolor=color, markersize=10, linestyle='dashdot') 
            for color in unitColors.values()]
     labels = unitColors.keys()
-    ax.legend(handles, labels, title="Units")
+    ax.legend(handles, labels)
     # Create a FigureCanvasTkAgg object and embed it in the Tkinter window
     canvas = FigureCanvasTkAgg(fig)
     canvas.draw()
