@@ -1,17 +1,13 @@
 import json
 import os
 import GUII
-counter = 1
 def save_data(original,temp, units, date, time):
-    global counter 
-    check_counter(counter)
 
-    c = check_counter(counter)
-    print(check_counter(counter))
+   
     temp = round(float(temp),3)
     original = round(float(original),3)
+    print(c)
     data = {
-        "ID":c,
         "Original Value": original,
         "Temperature": temp,
         "Units": units, 
@@ -31,36 +27,14 @@ def save_data(original,temp, units, date, time):
         existing_data = []
   
     existing_data.append(data)
-    counter += 1
 
     
 
     with open(filename, "w") as file:
         json.dump(existing_data, file, indent=4)
-        print("Temperature data saved successfully.")
+        print("Temperature data saved successfully.")c
   
 
-def check_counter(counter):
-    # check if counter is in json 
-    filename = "temperature_data.json"
-    if os.path.exists(filename):
-        with open(filename, "r") as file:
-            try:
-                existing_data = json.load(file)
-            except json.JSONDecodeError:
-                existing_data = []
-            
-    else:
-        existing_data = []
-    existing_ids = [item["ID"] for item in existing_data]
-    if counter in existing_ids:
-
-        print(existing_ids[-1])
-        print(max(existing_ids))
-        newCounter = int(counter)
-        newCounter = max(existing_ids) + 1
-        return newCounter
-    return False
 def check_json():
     filename = "temperature_data.json"
     if os.path.exists(filename):
